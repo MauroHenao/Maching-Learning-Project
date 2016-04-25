@@ -99,24 +99,25 @@ The accuaracy of this model is 0.85, higher than the first model.
 The third model is calculated with the gbm method of the train function:
 
 ```{r}
-#set.seed(1988)
-#fitControl <- trainControl(method = "repeatedcv",number = 5, repeats = 1)
-#model_gbm=train(classe ~ ., data = mytraining,method="gbm", trControl = fitControl,verbose = FALSE)
+set.seed(1988)
+fitControl <- trainControl(method = "repeatedcv",number = 5, repeats = 1)
+model_gbm=train(classe ~ ., data = mytraining,method="gbm", trControl = fitControl,verbose = FALSE)
 ```
 
 ####CrossValidation
 
 ```{r}
-#prediction_class <- predict(model_rpart, mytesting, type = "class")
-#confusionMatrix(predictionsA1, mytesting$classe)
+prediction_gbm <- predict(model_gbm, mytesting)
+confusionMatrix(prediction_gbm, mytesting$classe)
 ```
 
+The accuaracy of this model is 0.9953, higher than the other models.
 
 ##PREDICTING RESULTS WITH THE TEST DATA
 
-The prediction is going to be made with the second model:
+The prediction is going to be made with the boosted regression model:
 
 ```{r}
-prediction <- predict(model_class, test, type = "class")
+prediction <- predict(model_gbm, test)
 prediction
 ```
